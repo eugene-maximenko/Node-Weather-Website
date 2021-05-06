@@ -9,7 +9,7 @@ const forecast = (latitude, longitude, callback) => {
         } else if (body.message) {
             callback('Some problems with coordinates!', undefined);
         } else {
-            callback(undefined, 'It is currently ' + Math.round(body.main.temp - 273.15) + ' degrees out. There is a 0% chance of rain');
+            callback(undefined, 'It is currently ' + Math.round(body.main.temp - 273.15) + ' degrees out. The max temperature today is ' + Math.round(body.main.temp_max - 273.15) + ' deegrees. There is a 0% chance of rain');
         }
     })
 
