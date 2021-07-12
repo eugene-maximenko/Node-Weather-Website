@@ -1,8 +1,6 @@
 const path = require('path');
-
 const express = require('express');
 const hbs = require('hbs');
-
 const geocode = require('./utils/geocode.js')
 const forecast = require('./utils/forecast.js')
 
@@ -22,7 +20,7 @@ hbs.registerPartials(partialsPath);
 // Setup static directory to serve
 app.use(express.static(publicDirectoryPath));
 
-// 
+// Root route
 app.get('', (req, res) => {
     res.render('index', {
         title: 'Weather',
@@ -30,6 +28,7 @@ app.get('', (req, res) => {
     });
 });
 
+// About route
 app.get('/about', (req, res) => {
     res.render('about', {
         title: 'About me',
@@ -37,6 +36,7 @@ app.get('/about', (req, res) => {
     })
 })
 
+// Help route
 app.get('/help', (req, res) => {
     res.render('help', {
         helpText: 'This is some helpful text.',
@@ -44,6 +44,8 @@ app.get('/help', (req, res) => {
         name: 'Andrew Mead'
     })
 })
+
+// Weather route
 app.get('/weather', (req, res) => {
     if (!req.query.address) {
         return res.send({
@@ -51,11 +53,13 @@ app.get('/weather', (req, res) => {
         })
     }
 
+    // Geocode input
     geocode(req.query.address, (error, { latitude, longitude, location } = {}) => {
         if (error) {
             return res.send({ error });
         }
 
+        // Get forecast
         forecast(latitude, longitude, (error, forecastData) => {
             if (error) {
                 return res.send({ error });
@@ -72,6 +76,7 @@ app.get('/weather', (req, res) => {
     })
 });
 
+// Products route
 app.get('/products', (req, res) => {
     if (!req.query.search) {
         return res.send({
@@ -85,6 +90,7 @@ app.get('/products', (req, res) => {
     })
 })
 
+// Help route
 app.get('/help/*', (req, res) => {
     // res.send('Help article not found');
     res.render('404', {
@@ -94,6 +100,7 @@ app.get('/help/*', (req, res) => {
     })
 })
 
+// Any other page route
 app.get('*', (req, res) => {
     // res.send('My 404 page');
     res.render('404', {
@@ -103,6 +110,7 @@ app.get('*', (req, res) => {
     })
 });
 
+// Listen ot port
 app.listen(port, () => {
     console.log(`Server is up on ${port}.`);
 });
