@@ -39,7 +39,7 @@ app.get('/about', (req, res) => {
 // Help route
 app.get('/help', (req, res) => {
     res.render('help', {
-        helpText: 'This is some helpful text.',
+        helpText: 'If you have any questions or suggestions, please contact me at zhek4770@gmail.com.',
         title: 'Help',
         name: 'Eugene Maximenko'
     })
